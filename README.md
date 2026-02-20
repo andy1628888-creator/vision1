@@ -55,7 +55,7 @@ button{
 <body>
 
 <div class="container">
-<h2>🛵祥真一職人 電池壽命與續航評估系統🛵</h2>
+<h2>🛵祥真一職人｜電池壽命與續航評估系統</h2>
 
 <label>電池類型</label>
 <select id="batteryType" onchange="updateCapacity()">
