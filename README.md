@@ -107,7 +107,7 @@ button{
 </div>
 
 <div class="stats">
-📊 系統統計<br>
+📊 計算器統計<br>
 瀏覽次數：<span id="viewCount">0</span><br>
 計算次數：<span id="calcCount">0</span>
 </div>
