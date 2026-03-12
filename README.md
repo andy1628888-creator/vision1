@@ -49,6 +49,12 @@ button{
     text-align:center;
     color:#aaa;
 }
+.stats{
+    margin-top:15px;
+    font-size:14px;
+    text-align:center;
+    color:#ccc;
+}
 </style>
 </head>
 
@@ -99,9 +105,17 @@ button{
 台南祥真一職人｜本系統為估算參數，實際續航依騎乘習慣與車況(胎壓)路段略有差異<br>
 © 祥真一職人 版權所有
 </div>
+
+<div class="stats">
+📊 系統統計<br>
+瀏覽次數：<span id="viewCount">0</span><br>
+計算次數：<span id="calcCount">0</span>
+</div>
+
 </div>
 
 <script>
+
 function updateCapacity(){
     const batteryType = document.getElementById("batteryType").value;
     const voltage = document.getElementById("voltage").value;
@@ -142,6 +156,12 @@ function updateAgeOptions(list){
 }
 
 function calculate(){
+
+    let calc = localStorage.getItem("calcCount") || 0;
+    calc++;
+    localStorage.setItem("calcCount", calc);
+    document.getElementById("calcCount").innerText = calc;
+
     const voltage = parseInt(document.getElementById("voltage").value);
     const ah = parseInt(document.getElementById("capacity").value);
     const batteryType = document.getElementById("batteryType").value;
@@ -187,7 +207,19 @@ function calculate(){
     `;
 }
 
+function initCounter(){
+    let views = localStorage.getItem("viewCount") || 0;
+    views++;
+    localStorage.setItem("viewCount", views);
+    document.getElementById("viewCount").innerText = views;
+
+    let calc = localStorage.getItem("calcCount") || 0;
+    document.getElementById("calcCount").innerText = calc;
+}
+
 updateCapacity();
+initCounter();
+
 </script>
 
 </body>
