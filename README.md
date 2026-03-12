@@ -51,8 +51,8 @@ button{
 }
 .stats{
     margin-top:15px;
-    font-size:14px;
     text-align:center;
+    font-size:14px;
     color:#ccc;
 }
 </style>
@@ -108,8 +108,8 @@ button{
 
 <div class="stats">
 📊 計算器統計<br>
-瀏覽次數：<span id="viewCount">0</span><br>
-計算次數：<span id="calcCount">0</span>
+瀏覽次數：<span id="viewCount">讀取中...</span><br>
+計算次數：<span id="calcCount">讀取中...</span>
 </div>
 
 </div>
@@ -157,10 +157,11 @@ function updateAgeOptions(list){
 
 function calculate(){
 
-    let calc = localStorage.getItem("calcCount") || 0;
-    calc++;
-    localStorage.setItem("calcCount", calc);
-    document.getElementById("calcCount").innerText = calc;
+fetch("https://api.counterapi.dev/v1/xiangzhen/calc/up")
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("calcCount").innerText=data.count
+})
 
     const voltage = parseInt(document.getElementById("voltage").value);
     const ah = parseInt(document.getElementById("capacity").value);
@@ -207,18 +208,24 @@ function calculate(){
     `;
 }
 
-function initCounter(){
-    let views = localStorage.getItem("viewCount") || 0;
-    views++;
-    localStorage.setItem("viewCount", views);
-    document.getElementById("viewCount").innerText = views;
+function loadViews(){
 
-    let calc = localStorage.getItem("calcCount") || 0;
-    document.getElementById("calcCount").innerText = calc;
+fetch("https://api.counterapi.dev/v1/xiangzhen/views/up")
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("viewCount").innerText=data.count
+})
+
+fetch("https://api.counterapi.dev/v1/xiangzhen/calc")
+.then(res=>res.json())
+.then(data=>{
+document.getElementById("calcCount").innerText=data.count
+})
+
 }
 
 updateCapacity();
-initCounter();
+loadViews();
 
 </script>
 
