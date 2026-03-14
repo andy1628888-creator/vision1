@@ -207,7 +207,7 @@ table{
 td{
   width:50%;
   border:1px solid #e1e1e1;
-  padding:10px 6px;
+  padding:10px 8px;
   text-align:center;
   vertical-align:middle;
   font-size:13px;
