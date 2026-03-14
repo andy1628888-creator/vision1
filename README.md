@@ -11,37 +11,43 @@
 }
 
 html,body{
+  margin:0;
+  padding:0;
   overflow-x:hidden;
 }
 
 body{
   font-family:Arial;
   background:linear-gradient(180deg,#edf3fb,#dfe8f3);
-  margin:0;
   color:#222;
 }
+
 header{
   background:linear-gradient(135deg,#003d91,#005ecf);
   color:white;
   text-align:center;
-  padding:22px 16px 18px;
+  padding:22px 12px 18px;
   box-shadow:0 2px 10px rgba(0,0,0,0.18);
 }
+
 .header-inner{
   width:min(560px, calc(100% - 24px));
   margin:0 auto;
 }
+
 .header-title{
   font-size:24px;
   font-weight:bold;
   letter-spacing:1px;
 }
+
 .header-sub{
   margin-top:8px;
   font-size:13px;
   opacity:0.95;
   line-height:1.7;
 }
+
 .hero{
   width:min(560px, calc(100% - 24px));
   margin:14px auto 0;
@@ -50,6 +56,7 @@ header{
   box-shadow:0 8px 20px rgba(0,0,0,0.12);
   padding:18px 18px 16px;
 }
+
 .hero-title{
   text-align:center;
   color:#0b56b3;
@@ -57,18 +64,21 @@ header{
   font-weight:bold;
   margin-bottom:8px;
 }
+
 .hero-note{
   text-align:center;
   font-size:13px;
   color:#555;
   line-height:1.7;
 }
+
 .tab-bar{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:8px;
   margin-top:14px;
 }
+
 .tab-btn{
   border:none;
   border-radius:12px;
@@ -80,11 +90,13 @@ header{
   color:#134d95;
   box-shadow:inset 0 0 0 1px #d8e4f3;
 }
+
 .tab-btn.active{
   background:linear-gradient(135deg,#0c5ec2,#2d83eb);
   color:#fff;
   box-shadow:none;
 }
+
 .container{
   width:min(560px, calc(100% - 24px));
   margin:14px auto 22px;
@@ -93,9 +105,11 @@ header{
   border-radius:16px;
   box-shadow:0 8px 20px rgba(0,0,0,0.12);
 }
+
 .hidden{
   display:none;
 }
+
 .section-title{
   text-align:center;
   font-weight:bold;
@@ -104,6 +118,7 @@ header{
   margin-bottom:10px;
   font-size:19px;
 }
+
 .section-subtitle{
   text-align:center;
   font-size:13px;
@@ -111,12 +126,14 @@ header{
   margin-bottom:10px;
   line-height:1.6;
 }
+
 label{
   font-weight:bold;
   display:block;
   margin-top:12px;
   color:#333;
 }
+
 select,input{
   width:100%;
   padding:11px;
@@ -126,6 +143,7 @@ select,input{
   font-size:14px;
   background:#fff;
 }
+
 button.calc-btn{
   width:100%;
   padding:14px;
@@ -139,9 +157,11 @@ button.calc-btn{
   cursor:pointer;
   transition:0.2s ease;
 }
+
 button.calc-btn:hover{
   background:linear-gradient(90deg,#23933e,#28a745);
 }
+
 .result{
   margin-top:16px;
   background:#f6f8fb;
@@ -151,10 +171,12 @@ button.calc-btn:hover{
   border-left:5px solid #2ecc71;
   box-shadow:inset 0 0 0 1px #edf1f5;
 }
+
 .warning{
   color:#d63031;
   font-weight:bold;
 }
+
 .error-box{
   margin-top:16px;
   background:#fff3f3;
@@ -166,35 +188,60 @@ button.calc-btn:hover{
   line-height:1.6;
   font-weight:bold;
 }
+
 .input-error{
   border:2px solid #e53935 !important;
   box-shadow:0 0 0 3px rgba(229,57,53,0.15);
 }
+
 table{
   width:100%;
-  margin-top:14px;
+  max-width:100%;
+  margin:14px auto 0 auto;
   border-collapse:collapse;
-  overflow:hidden;
   border-radius:10px;
+  overflow:hidden;
+  table-layout:fixed;
 }
+
 td{
+  width:50%;
   border:1px solid #e1e1e1;
-  padding:8px;
+  padding:10px 6px;
   text-align:center;
+  vertical-align:middle;
   font-size:13px;
+  word-break:break-word;
 }
+
 tr:first-child td{
   background:#f7fafc;
   font-weight:bold;
 }
+
+#li_segment,
+#pb_segment{
+  width:100%;
+  display:block;
+}
+
+#li_segment table,
+#pb_segment table{
+  width:100%;
+}
+
 canvas{
   margin-top:16px;
+  width:100% !important;
+  max-width:100%;
 }
+
 .info-strong{
   font-size:17px;
   font-weight:bold;
   color:#0d5bb5;
 }
+
 .bar{
   width:100%;
   height:20px;
@@ -204,23 +251,27 @@ canvas{
   margin-top:12px;
   box-shadow:inset 0 1px 3px rgba(0,0,0,0.15);
 }
+
 .bar-fill{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,#00c853,#64dd17);
   transition:width 0.5s ease;
 }
+
 .status{
   margin-top:8px;
   font-weight:bold;
   font-size:15px;
 }
+
 .small-note{
   font-size:13px;
   color:#666;
   margin-top:12px;
   line-height:1.7;
 }
+
 .stats-box{
   margin-top:18px;
   background:#f4f7fb;
@@ -230,6 +281,7 @@ canvas{
   line-height:1.8;
   text-align:center;
 }
+
 footer{
   margin-top:20px;
   text-align:center;
@@ -237,6 +289,7 @@ footer{
   color:#777;
   padding-bottom:18px;
 }
+
 @media (max-width:540px){
   .header-title{font-size:22px}
   .tab-bar{grid-template-columns:1fr}
@@ -1233,6 +1286,7 @@ function pb_drawChart(voltList,startSoc,health){
 
 function pb_buildSegment(cap,current,health,startSoc){
   let html="<table><tr><td>區段</td><td>充電時間</td></tr>"
+
   const agingFactor=(1 + (1-health)*0.35)
 
   for(let i=0;i<pb_socPercent.length-1;i++){
