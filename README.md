@@ -242,6 +242,12 @@ canvas{
   color:#0d5bb5;
 }
 
+.health-a{color:#159447;font-weight:bold;}
+.health-b{color:#2a8fbd;font-weight:bold;}
+.health-c{color:#d68910;font-weight:bold;}
+.health-d{color:#d35400;font-weight:bold;}
+.health-e{color:#c0392b;font-weight:bold;}
+
 .bar{
   width:100%;
   height:20px;
@@ -575,6 +581,17 @@ let rg_count=localStorage.getItem("rg_count")||0
 document.getElementById("rg_count").innerText=rg_count
 
 /* =======================
+   健康度顏色判定
+======================= */
+function getHealthBadge(healthPercent){
+  if(healthPercent >= 90) return "<span class='health-a'>🟢 極佳</span>"
+  if(healthPercent >= 70) return "<span class='health-b'>🟢 正常</span>"
+  if(healthPercent >= 50) return "<span class='health-c'>🟡 建議觀察</span>"
+  if(healthPercent >= 35) return "<span class='health-d'>🟠 建議檢測</span>"
+  return "<span class='health-e'>🔴 建議更換</span>"
+}
+
+/* =======================
    鋰電池模組
 ======================= */
 const li_lithiumData={
@@ -746,6 +763,7 @@ function li_calc(){
   }
 
   const health=li_getHealthFromDate(installDate)
+  const healthPercent=(health*100).toFixed(0)
   const soc=li_getSOC(voltage,type)
   const remain=cap*(100-soc)/100
   const time=(remain/charger)*1.35*(1 + (1-health)*0.4)
@@ -759,7 +777,8 @@ function li_calc(){
 
   document.getElementById("li_result").innerHTML=
     "剩餘電量 <span class='info-strong'>"+soc.toFixed(1)+"%</span><br>"+
-    "電池健康度 <span class='info-strong'>"+(health*100).toFixed(0)+"%</span><br>"+
+    "電池健康度 <span class='info-strong'>"+healthPercent+"%</span><br>"+
+    "健康判定 <span class='info-strong'>"+getHealthBadge(parseFloat(healthPercent))+"</span><br>"+
     "目前充電模式 <span class='info-strong'>"+li_getChargeModeBySoc(soc)+"</span><br>"+
     "預估充電時間 <span class='info-strong'>"+time.toFixed(1)+" 小時</span><br>"+
     "預計 <span class='info-strong'>"+finishText+" 完成充電</span><br>"+
@@ -1092,6 +1111,7 @@ function pb_calc(){
     if(health < 0.30) health = 0.30
   }
 
+  const healthPercent=(health*100).toFixed(0)
   const voltList=pb_socTable[type]
   let soc=0
 
@@ -1122,7 +1142,8 @@ function pb_calc(){
 
   document.getElementById("pb_result").innerHTML=
     "剩餘電量 <span class='info-strong'>"+soc.toFixed(1)+"%</span><br>"+
-    "電池健康度 <span class='info-strong'>"+(health*100).toFixed(0)+"%</span><br>"+
+    "電池健康度 <span class='info-strong'>"+healthPercent+"%</span><br>"+
+    "健康判定 <span class='info-strong'>"+getHealthBadge(parseFloat(healthPercent))+"</span><br>"+
     "電池年齡 <span class='info-strong'>"+ageText+"</span><br>"+
     "建議狀態 <span class='info-strong'>"+adviceText+"</span><br>"+
     "目前充電模式 <span class='info-strong'>"+pb_getLeadChargeModeBySoc(soc)+"</span><br>"+
