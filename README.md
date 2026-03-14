@@ -6,6 +6,14 @@
 <title>祥真一職人微型電動車電池診斷系統</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  overflow-x:hidden;
+}
+
 body{
   font-family:Arial;
   background:linear-gradient(180deg,#edf3fb,#dfe8f3);
@@ -19,6 +27,10 @@ header{
   padding:22px 16px 18px;
   box-shadow:0 2px 10px rgba(0,0,0,0.18);
 }
+.header-inner{
+  width:min(560px, calc(100% - 24px));
+  margin:0 auto;
+}
 .header-title{
   font-size:24px;
   font-weight:bold;
@@ -31,7 +43,7 @@ header{
   line-height:1.7;
 }
 .hero{
-  max-width:560px;
+  width:min(560px, calc(100% - 24px));
   margin:14px auto 0;
   background:white;
   border-radius:16px;
@@ -74,7 +86,7 @@ header{
   box-shadow:none;
 }
 .container{
-  max-width:560px;
+  width:min(560px, calc(100% - 24px));
   margin:14px auto 22px;
   background:white;
   padding:22px;
@@ -111,7 +123,6 @@ select,input{
   margin-top:6px;
   border:1px solid #ccd6e2;
   border-radius:10px;
-  box-sizing:border-box;
   font-size:14px;
   background:#fff;
 }
@@ -235,9 +246,11 @@ footer{
 <body>
 
 <header>
-  <div class="header-title">祥真一職人微型電動車電池診斷系統</div>
-  <div class="header-sub">
-    鋰電池充電計算｜鉛酸電池充電計算｜電池壽命與續航評估
+  <div class="header-inner">
+    <div class="header-title">祥真一職人微型電動車電池診斷系統</div>
+    <div class="header-sub">
+      鋰電池充電計算｜鉛酸電池充電計算｜電池壽命與續航評估
+    </div>
   </div>
 </header>
 
