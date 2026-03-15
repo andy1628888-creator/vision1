@@ -17,93 +17,201 @@ html,body{
 }
 
 body{
-  font-family:Arial;
-  background:linear-gradient(180deg,#edf3fb,#dfe8f3);
-  color:#222;
+  font-family:Arial,"Noto Sans TC",sans-serif;
+  color:#1d2a3a;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 28%),
+    radial-gradient(circle at 86% 78%, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0) 26%),
+    linear-gradient(180deg,#eef5ff 0%, #e5eefb 48%, #dde8f6 100%);
+  position:relative;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(circle at 18% 26%, rgba(38,110,255,0.10) 0 2px, transparent 3px),
+    radial-gradient(circle at 82% 22%, rgba(38,110,255,0.08) 0 2px, transparent 3px),
+    radial-gradient(circle at 72% 74%, rgba(38,110,255,0.08) 0 2px, transparent 3px),
+    radial-gradient(circle at 28% 78%, rgba(38,110,255,0.06) 0 2px, transparent 3px);
+  opacity:.8;
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(80% 40% at 18% 10%, rgba(65,125,255,0.08) 0%, rgba(65,125,255,0) 60%),
+    radial-gradient(70% 38% at 92% 76%, rgba(65,125,255,0.06) 0%, rgba(65,125,255,0) 62%);
+  opacity:.9;
 }
 
 header{
-  background:linear-gradient(135deg,#003d91,#005ecf);
-  color:white;
+  background:
+    linear-gradient(135deg,rgba(8,74,163,0.96),rgba(45,117,232,0.96)),
+    linear-gradient(180deg,#0c56b6,#1e73dd);
+  color:#fff;
   text-align:center;
-  padding:22px 12px 18px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.18);
+  padding:28px 14px 24px;
+  box-shadow:0 10px 28px rgba(12,67,150,0.18);
+  position:relative;
+  z-index:1;
+  overflow:hidden;
+}
+
+header::before{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  top:-150px;
+  left:-80px;
+  background:radial-gradient(circle, rgba(255,255,255,0.20), rgba(255,255,255,0));
+  pointer-events:none;
+}
+
+header::after{
+  content:"";
+  position:absolute;
+  width:240px;
+  height:240px;
+  border-radius:50%;
+  right:-100px;
+  top:-90px;
+  background:radial-gradient(circle, rgba(255,255,255,0.14), rgba(255,255,255,0));
+  pointer-events:none;
 }
 
 .header-inner{
-  width:min(560px, calc(100% - 24px));
+  width:min(580px, calc(100% - 24px));
   margin:0 auto;
+  position:relative;
+  z-index:1;
 }
 
 .header-title{
-  font-size:24px;
-  font-weight:bold;
+  font-size:28px;
+  font-weight:800;
   letter-spacing:1px;
+  text-shadow:0 2px 10px rgba(0,0,0,0.10);
 }
 
 .header-sub{
-  margin-top:8px;
+  margin-top:10px;
   font-size:13px;
-  opacity:0.95;
-  line-height:1.7;
+  opacity:0.97;
+  line-height:1.8;
+  letter-spacing:.3px;
 }
 
 .hero{
-  width:min(560px, calc(100% - 24px));
-  margin:14px auto 0;
-  background:white;
-  border-radius:16px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.12);
-  padding:18px 18px 16px;
+  width:min(580px, calc(100% - 24px));
+  margin:16px auto 0;
+  background:rgba(255,255,255,0.94);
+  border-radius:22px;
+  box-shadow:
+    0 16px 34px rgba(39,85,155,0.10),
+    0 2px 10px rgba(255,255,255,0.45) inset;
+  border:1px solid rgba(108,149,214,0.15);
+  padding:20px 20px 18px;
+  position:relative;
+  z-index:1;
+  backdrop-filter:blur(4px);
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:22px;
+  pointer-events:none;
+  background:
+    linear-gradient(135deg, rgba(53,122,235,0.06), rgba(255,255,255,0) 40%),
+    linear-gradient(315deg, rgba(53,122,235,0.04), rgba(255,255,255,0) 42%);
 }
 
 .hero-title{
   text-align:center;
-  color:#0b56b3;
-  font-size:19px;
-  font-weight:bold;
+  color:#0f5fcb;
+  font-size:20px;
+  font-weight:800;
   margin-bottom:8px;
+  letter-spacing:.4px;
+  position:relative;
+  z-index:1;
 }
 
 .hero-note{
   text-align:center;
   font-size:13px;
-  color:#555;
-  line-height:1.7;
+  color:#5a6879;
+  line-height:1.8;
+  position:relative;
+  z-index:1;
 }
 
 .tab-bar{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:14px;
+  gap:10px;
+  margin-top:16px;
+  position:relative;
+  z-index:1;
 }
 
 .tab-btn{
   border:none;
-  border-radius:12px;
-  padding:12px 8px;
+  border-radius:16px;
+  padding:14px 10px;
   font-size:14px;
-  font-weight:bold;
+  font-weight:800;
   cursor:pointer;
-  background:#eef4fb;
-  color:#134d95;
-  box-shadow:inset 0 0 0 1px #d8e4f3;
+  color:#18519d;
+  background:
+    linear-gradient(180deg,#f8fbff,#ebf3ff);
+  box-shadow:
+    inset 0 0 0 1px #d8e5f7,
+    0 6px 14px rgba(50,96,170,0.08);
+  transition:all .25s ease;
+  letter-spacing:.2px;
+}
+
+.tab-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    inset 0 0 0 1px #cfe0f7,
+    0 10px 18px rgba(50,96,170,0.12);
 }
 
 .tab-btn.active{
-  background:linear-gradient(135deg,#0c5ec2,#2d83eb);
   color:#fff;
-  box-shadow:none;
+  background:
+    linear-gradient(135deg,#0e5fc6,#3084ea);
+  box-shadow:
+    0 10px 20px rgba(31,96,188,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.14);
 }
 
 .container{
-  width:min(560px, calc(100% - 24px));
-  margin:14px auto 22px;
-  background:white;
-  padding:22px;
-  border-radius:16px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+  width:min(580px, calc(100% - 24px));
+  margin:16px auto 24px;
+  background:rgba(255,255,255,0.95);
+  padding:24px 22px;
+  border-radius:22px;
+  box-shadow:
+    0 16px 34px rgba(39,85,155,0.10),
+    0 2px 10px rgba(255,255,255,0.45) inset;
+  border:1px solid rgba(108,149,214,0.15);
+  position:relative;
+  z-index:1;
+  backdrop-filter:blur(4px);
 }
 
 .hidden{
@@ -112,111 +220,134 @@ header{
 
 .section-title{
   text-align:center;
-  font-weight:bold;
-  color:#0b56b3;
+  font-weight:800;
+  color:#0e5fca;
   margin-top:2px;
   margin-bottom:10px;
-  font-size:19px;
+  font-size:20px;
+  letter-spacing:.3px;
 }
 
 .section-subtitle{
   text-align:center;
   font-size:13px;
-  color:#666;
-  margin-bottom:10px;
-  line-height:1.6;
+  color:#6b7887;
+  margin-bottom:12px;
+  line-height:1.7;
 }
 
 label{
-  font-weight:bold;
+  font-weight:800;
   display:block;
-  margin-top:12px;
-  color:#333;
+  margin-top:13px;
+  color:#2d3b4c;
+  font-size:14px;
 }
 
 select,input{
   width:100%;
-  padding:11px;
-  margin-top:6px;
-  border:1px solid #ccd6e2;
-  border-radius:10px;
+  padding:12px 12px;
+  margin-top:7px;
+  border:1px solid #d2deec;
+  border-radius:12px;
   font-size:14px;
   background:#fff;
+  color:#253649;
+  outline:none;
+  transition:border-color .2s ease, box-shadow .2s ease;
+  box-shadow:0 2px 6px rgba(0,0,0,0.02);
+}
+
+select:focus,input:focus{
+  border-color:#7aa7eb;
+  box-shadow:0 0 0 4px rgba(82,133,220,0.12);
 }
 
 button.calc-btn{
   width:100%;
-  padding:14px;
-  margin-top:18px;
-  background:linear-gradient(90deg,#28a745,#32c15a);
-  color:white;
+  padding:15px;
+  margin-top:20px;
+  background:linear-gradient(90deg,#1672dc,#3c8ff2);
+  color:#fff;
   border:none;
-  border-radius:12px;
+  border-radius:15px;
   font-size:17px;
-  font-weight:bold;
+  font-weight:800;
   cursor:pointer;
-  transition:0.2s ease;
+  transition:all .25s ease;
+  letter-spacing:.4px;
+  box-shadow:0 10px 20px rgba(27,109,215,0.18);
 }
 
 button.calc-btn:hover{
-  background:linear-gradient(90deg,#23933e,#28a745);
+  transform:translateY(-2px);
+  box-shadow:0 14px 24px rgba(27,109,215,0.22);
 }
 
 .result{
-  margin-top:16px;
-  background:#f6f8fb;
-  padding:15px;
-  border-radius:12px;
-  line-height:1.9;
-  border-left:5px solid #2ecc71;
-  box-shadow:inset 0 0 0 1px #edf1f5;
+  margin-top:18px;
+  background:
+    linear-gradient(180deg,#f9fbff,#f3f8ff);
+  padding:18px;
+  border-radius:16px;
+  line-height:1.95;
+  border-left:5px solid #36b56d;
+  box-shadow:
+    inset 0 0 0 1px #e9f0f8,
+    0 8px 16px rgba(32,78,150,0.05);
+  color:#2a3a4f;
 }
 
 .warning{
   color:#d63031;
-  font-weight:bold;
+  font-weight:800;
 }
 
 .error-box{
   margin-top:16px;
-  background:#fff3f3;
+  background:#fff4f4;
   color:#c62828;
-  padding:12px;
-  border-radius:12px;
+  padding:13px;
+  border-radius:14px;
   border-left:5px solid #e53935;
   display:none;
-  line-height:1.6;
-  font-weight:bold;
+  line-height:1.7;
+  font-weight:800;
+  box-shadow:0 6px 16px rgba(206,65,65,0.08);
 }
 
 .input-error{
   border:2px solid #e53935 !important;
-  box-shadow:0 0 0 3px rgba(229,57,53,0.15);
+  box-shadow:0 0 0 4px rgba(229,57,53,0.12) !important;
 }
 
 table{
   width:100%;
   max-width:100%;
-  margin:14px auto 0 auto;
+  margin:16px auto 0 auto;
   border-collapse:collapse;
-  border-radius:10px;
+  border-radius:14px;
   overflow:hidden;
   table-layout:fixed;
+  background:#fff;
+  box-shadow:0 8px 16px rgba(31,78,145,0.05);
 }
 
 td{
   width:50%;
-  border:1px solid #e1e1e1;
-  padding:10px 8px;
+  border:1px solid #e4edf7;
+  padding:11px 8px;
   text-align:center;
   vertical-align:middle;
   font-size:13px;
   word-break:break-word;
+  color:#2d3b4c;
 }
 
 tr:first-child td{
-  background:#f7fafc;
-  font-weight:bold;
+  background:linear-gradient(180deg,#f6f9ff,#edf4ff);
+  font-weight:800;
+  color:#1b4f95;
 }
 
 #li_segment,
@@ -231,74 +362,106 @@ tr:first-child td{
 }
 
 canvas{
-  margin-top:16px;
+  margin-top:20px;
   width:100% !important;
   max-width:100%;
+  background:linear-gradient(180deg, rgba(255,255,255,0.72), rgba(246,250,255,0.72));
+  border-radius:16px;
+  box-shadow:inset 0 0 0 1px rgba(213,226,242,0.8);
 }
 
 .info-strong{
   font-size:17px;
-  font-weight:bold;
-  color:#0d5bb5;
+  font-weight:800;
+  color:#0e5fc8;
 }
 
-.health-a{color:#159447;font-weight:bold;}
-.health-b{color:#2a8fbd;font-weight:bold;}
-.health-c{color:#d68910;font-weight:bold;}
-.health-d{color:#d35400;font-weight:bold;}
-.health-e{color:#c0392b;font-weight:bold;}
+.health-a{color:#14944a;font-weight:800;}
+.health-b{color:#1e81c4;font-weight:800;}
+.health-c{color:#c78408;font-weight:800;}
+.health-d{color:#d45f06;font-weight:800;}
+.health-e{color:#c0392b;font-weight:800;}
 
 .bar{
   width:100%;
-  height:20px;
-  background:#ddd;
-  border-radius:10px;
+  height:22px;
+  background:linear-gradient(180deg,#dde5ef,#cfd9e6);
+  border-radius:12px;
   overflow:hidden;
-  margin-top:12px;
-  box-shadow:inset 0 1px 3px rgba(0,0,0,0.15);
+  margin-top:14px;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,0.12);
 }
 
 .bar-fill{
   height:100%;
   width:0%;
-  background:linear-gradient(90deg,#00c853,#64dd17);
-  transition:width 0.5s ease;
+  background:linear-gradient(90deg,#16c96b,#6de46d);
+  transition:width .5s ease;
+  box-shadow:0 0 12px rgba(49,210,111,0.25);
 }
 
 .status{
-  margin-top:8px;
-  font-weight:bold;
+  margin-top:10px;
+  font-weight:800;
   font-size:15px;
+  color:#2b3f56;
 }
 
 .small-note{
   font-size:13px;
-  color:#666;
+  color:#667587;
   margin-top:12px;
-  line-height:1.7;
+  line-height:1.8;
 }
 
 .stats-box{
   margin-top:18px;
-  background:#f4f7fb;
-  padding:12px;
-  border-radius:12px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.08);
-  line-height:1.8;
+  background:
+    linear-gradient(180deg,#f8fbff,#eef5ff);
+  padding:15px;
+  border-radius:16px;
+  box-shadow:
+    inset 0 0 0 1px #e0eaf6,
+    0 8px 16px rgba(39,85,155,0.06);
+  line-height:1.9;
   text-align:center;
+  color:#38516d;
 }
 
 footer{
-  margin-top:20px;
+  margin-top:22px;
   text-align:center;
   font-size:13px;
-  color:#777;
+  color:#718093;
   padding-bottom:18px;
 }
 
 @media (max-width:540px){
-  .header-title{font-size:22px}
-  .tab-bar{grid-template-columns:1fr}
+  .header-title{
+    font-size:22px;
+  }
+
+  .header-sub{
+    font-size:12px;
+  }
+
+  .container,
+  .hero{
+    padding:18px;
+    border-radius:18px;
+  }
+
+  .tab-bar{
+    grid-template-columns:1fr;
+  }
+
+  .section-title{
+    font-size:18px;
+  }
+
+  .tab-btn{
+    padding:13px 12px;
+  }
 }
 </style>
 </head>
@@ -306,9 +469,10 @@ footer{
 
 <header>
   <div class="header-inner">
-    <div class="header-title">祥真一職人微型電動車電池診斷系統</div>
+    <div class="header-title">⚡ 祥真一職人</div>
     <div class="header-sub">
-      鋰電池充電計算｜鉛酸電池充電計算｜電池壽命與續航評估
+      微型電動車電池診斷系統<br>
+      鋰電池充電診斷系統｜鉛酸電池充電診斷系統｜續航距離評估系統
     </div>
   </div>
 </header>
@@ -330,15 +494,14 @@ footer{
   </div>
 
   <div class="tab-bar">
-    <button id="tabLithium" class="tab-btn active" onclick="switchTool('lithium')">鋰電池充電計算</button>
-    <button id="tabLead" class="tab-btn" onclick="switchTool('lead')">鉛酸電池充電計算</button>
-    <button id="tabRange" class="tab-btn" onclick="switchTool('range')">續航距離評估</button>
+    <button id="tabLithium" class="tab-btn active" onclick="switchTool('lithium')">🔋 鋰電池充電診斷系統</button>
+    <button id="tabLead" class="tab-btn" onclick="switchTool('lead')">🔋 鉛酸電池充電診斷系統</button>
+    <button id="tabRange" class="tab-btn" onclick="switchTool('range')">🛵 續航距離評估系統</button>
   </div>
 </div>
 
-<!-- 鋰電池 -->
 <div id="lithiumBox" class="container">
-  <div class="section-title">祥真一職人鋰電池充電計算器</div>
+  <div class="section-title">祥真一職人鋰電池充電診斷系統</div>
   <div class="section-subtitle">適用微型電動車鋰電池充電時間、SOC 與充電曲線判讀</div>
 
   <label>電池電壓</label>
@@ -384,9 +547,8 @@ footer{
   </footer>
 </div>
 
-<!-- 鉛酸電池 -->
 <div id="leadBox" class="container hidden">
-  <div class="section-title">祥真一職人鉛酸電池充電計算器</div>
+  <div class="section-title">祥真一職人鉛酸電池充電診斷系統</div>
   <div class="section-subtitle">適用微型電動車鉛酸電池健康度、充電模式與充電時間估算</div>
 
   <label>電池電壓</label>
@@ -428,9 +590,8 @@ footer{
   </footer>
 </div>
 
-<!-- 續航評估 -->
 <div id="rangeBox" class="container hidden">
-  <div class="section-title">祥真一職人電池壽命與續航評估系統</div>
+  <div class="section-title">祥真一職人續航距離評估系統</div>
   <div class="section-subtitle">依電池類型、電壓、容量、路況與載重估算微型電動車續航距離</div>
 
   <label>電池類型</label>
@@ -496,20 +657,14 @@ function switchTool(type){
   document.getElementById("tabRange").classList.toggle("active", type==="range")
 }
 
-/* =======================
-   系統時間與總統計
-======================= */
 function updateSystemTime(){
   const now = new Date()
-
   const year = now.getFullYear()
   const month = String(now.getMonth()+1).padStart(2,"0")
   const day = String(now.getDate()).padStart(2,"0")
-
   let hour = now.getHours()
   const minute = String(now.getMinutes()).padStart(2,"0")
   const second = String(now.getSeconds()).padStart(2,"0")
-
   const period = hour >= 12 ? "下午" : "上午"
   hour = hour % 12
   if(hour === 0) hour = 12
@@ -547,9 +702,6 @@ function increaseSystemCalcCounter(){
   .catch(()=>{})
 }
 
-/* =======================
-   鋰電池統計
-======================= */
 let li_view=localStorage.getItem("li_view")||0
 li_view++
 localStorage.setItem("li_view",li_view)
@@ -558,9 +710,6 @@ document.getElementById("li_view").innerText=li_view
 let li_count=localStorage.getItem("li_count")||0
 document.getElementById("li_count").innerText=li_count
 
-/* =======================
-   鉛酸統計
-======================= */
 let pb_view=localStorage.getItem("pb_view")||0
 pb_view++
 localStorage.setItem("pb_view",pb_view)
@@ -569,9 +718,6 @@ document.getElementById("pb_view").innerText=pb_view
 let pb_count=localStorage.getItem("pb_count")||0
 document.getElementById("pb_count").innerText=pb_count
 
-/* =======================
-   續航統計
-======================= */
 let rg_view=localStorage.getItem("rg_view")||0
 rg_view++
 localStorage.setItem("rg_view",rg_view)
@@ -580,9 +726,6 @@ document.getElementById("rg_view").innerText=rg_view
 let rg_count=localStorage.getItem("rg_count")||0
 document.getElementById("rg_count").innerText=rg_count
 
-/* =======================
-   健康度顏色判定
-======================= */
 function getHealthBadge(healthPercent){
   if(healthPercent >= 90) return "<span class='health-a'>🟢 極佳</span>"
   if(healthPercent >= 70) return "<span class='health-b'>🟢 正常</span>"
@@ -591,9 +734,6 @@ function getHealthBadge(healthPercent){
   return "<span class='health-e'>🔴 建議更換</span>"
 }
 
-/* =======================
-   鋰電池模組
-======================= */
 const li_lithiumData={
   58:{full:58.0, charger:58.4, currents:{12:3,16:3,20:3,30:5,40:8,50:8}, low:45.0, minInput:43.0},
   60:{full:71.0, charger:71.4, currents:{20:3,30:5,40:8,50:8}, low:56.0, minInput:54.0},
@@ -764,6 +904,21 @@ function li_calc(){
 
   const health=li_getHealthFromDate(installDate)
   const healthPercent=(health*100).toFixed(0)
+
+  let months=Math.floor((new Date()-new Date(installDate))/1000/3600/24/30)
+  if(months<0) months=0
+  const years=Math.floor(months/12)
+  const remainMonths=months%12
+
+  let ageText=""
+  if(years<=0){
+    ageText=remainMonths+" 個月"
+  }else if(remainMonths===0){
+    ageText=years+" 年"
+  }else{
+    ageText=years+" 年 "+remainMonths+" 個月"
+  }
+
   const soc=li_getSOC(voltage,type)
   const remain=cap*(100-soc)/100
   const time=(remain/charger)*1.35*(1 + (1-health)*0.4)
@@ -779,6 +934,7 @@ function li_calc(){
     "剩餘電量 <span class='info-strong'>"+soc.toFixed(1)+"%</span><br>"+
     "電池健康度 <span class='info-strong'>"+healthPercent+"%</span><br>"+
     "健康判定 <span class='info-strong'>"+getHealthBadge(parseFloat(healthPercent))+"</span><br>"+
+    "電池年齡 <span class='info-strong'>"+ageText+"</span><br>"+
     "目前充電模式 <span class='info-strong'>"+li_getChargeModeBySoc(soc)+"</span><br>"+
     "預估充電時間 <span class='info-strong'>"+time.toFixed(1)+" 小時</span><br>"+
     "預計 <span class='info-strong'>"+finishText+" 完成充電</span><br>"+
@@ -824,7 +980,6 @@ function li_drawChart(type,startSoc){
     const targetSoc=li_socPercent[i]
     const voltagePoint=li_getVoltageAtSOC(type,targetSoc)
     fullCurve.push({x:targetSoc,y:voltagePoint})
-
     if(targetSoc>=Math.ceil(startSoc/20)*20){
       progressCurve.push({x:targetSoc,y:voltagePoint})
     }
@@ -959,9 +1114,6 @@ function li_buildSegment(cap,current,health,startSoc){
   document.getElementById("li_segment").innerHTML=html
 }
 
-/* =======================
-   鉛酸模組
-======================= */
 const pb_voltageLimit={
   48:{min:44,max:52,low:44},
   60:{min:55,max:65,low:55},
@@ -990,7 +1142,6 @@ function pb_showError(message, fieldId){
   box.style.display="block"
   box.innerHTML="⚠ "+message
   pb_clearFieldErrors()
-
   if(fieldId){
     const field=document.getElementById(fieldId)
     field.classList.add("input-error")
@@ -1010,7 +1161,6 @@ function pb_updateVoltageInputLimit(){
   const voltageInput=document.getElementById("pb_voltage")
   const minV=pb_voltageLimit[type].min
   const maxV=pb_voltageLimit[type].max
-
   voltageInput.min=minV
   voltageInput.max=maxV
   voltageInput.placeholder="請輸入 "+minV+" ~ "+maxV+" V"
@@ -1178,7 +1328,6 @@ function pb_drawChart(voltList,startSoc,health){
   for(let i=0;i<pb_socPercent.length;i++){
     fullCurve.push({x:pb_socPercent[i], y:voltList[i]})
     oldCurve.push({x:pb_socPercent[i], y:voltList[i]*health})
-
     if(pb_socPercent[i] >= Math.ceil(startSoc/20)*20){
       progressCurve.push({x:pb_socPercent[i], y:voltList[i]})
     }
@@ -1307,7 +1456,6 @@ function pb_drawChart(voltList,startSoc,health){
 
 function pb_buildSegment(cap,current,health,startSoc){
   let html="<table><tr><td>區段</td><td>充電時間</td></tr>"
-
   const agingFactor=(1 + (1-health)*0.35)
 
   for(let i=0;i<pb_socPercent.length-1;i++){
@@ -1323,9 +1471,6 @@ function pb_buildSegment(cap,current,health,startSoc){
   document.getElementById("pb_segment").innerHTML=html
 }
 
-/* =======================
-   續航模組
-======================= */
 function rg_updateCapacity(){
   const batteryType=document.getElementById("rg_batteryType").value
   const voltage=document.getElementById("rg_voltage").value
@@ -1333,7 +1478,6 @@ function rg_updateCapacity(){
   capacitySelect.innerHTML=""
 
   let options=[]
-
   if(batteryType==="lead"){
     if(voltage==="48"){ options=[13,15,20,30] }
     if(voltage==="60"){ options=[20,24,30] }
@@ -1357,7 +1501,6 @@ function rg_updateCapacity(){
 function rg_updateAgeOptions(list){
   const ageSelect=document.getElementById("rg_age")
   ageSelect.innerHTML=""
-
   list.forEach(function(item){
     const opt=document.createElement("option")
     if(item==='全新') opt.value=1
@@ -1370,7 +1513,6 @@ function rg_updateAgeOptions(list){
 
 function rg_calculate(){
   increaseSystemCalcCounter()
-
   rg_count++
   localStorage.setItem("rg_count",rg_count)
   document.getElementById("rg_count").innerText=rg_count
@@ -1410,7 +1552,6 @@ function rg_calculate(){
     "<div class='small-note'>🔋⚠️ 電池壽命會因騎乘習慣、充電方式、環境溫度、濕度、灰塵與載重影響，每位車主實際狀況可能有所不同。</div>"
 }
 
-/* 初始化 */
 li_updateCapacityOptions()
 pb_updateVoltageInputLimit()
 pb_updateCapacityOptions()
