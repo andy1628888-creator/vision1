@@ -428,6 +428,37 @@ canvas{
   color:#38516d;
 }
 
+.notice-card{
+  margin-top:14px;
+  padding:14px 14px 12px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#f7fbff,#eef5ff);
+  border:1px solid #dbe8f7;
+  border-left:5px solid #4c8fe8;
+  box-shadow:0 6px 14px rgba(39,85,155,0.06);
+}
+
+.notice-title{
+  font-size:14px;
+  font-weight:800;
+  color:#1e5fb8;
+  margin-bottom:6px;
+  letter-spacing:.2px;
+}
+
+.notice-text{
+  font-size:14px;
+  line-height:1.8;
+  color:#3d5168;
+}
+
+.notice-store{
+  margin-top:8px;
+  font-size:13px;
+  color:#5d7088;
+  font-weight:700;
+}
+
 footer{
   margin-top:22px;
   text-align:center;
@@ -601,11 +632,7 @@ footer{
   </select>
 
   <label>電壓</label>
-  <select id="rg_voltage" onchange="rg_updateCapacity()">
-    <option value="48">48V</option>
-    <option value="60">60V</option>
-    <option value="72">72V</option>
-  </select>
+  <select id="rg_voltage" onchange="rg_updateCapacity()"></select>
 
   <label>容量</label>
   <select id="rg_capacity"></select>
@@ -671,6 +698,15 @@ function updateSystemTime(){
 
   document.getElementById("systemTimeBox").innerHTML =
     "系統時間："+year+" / "+month+" / "+day+"　"+period+" "+hour+":"+minute+":"+second
+}
+
+function formatTimeRange(date){
+  let h = date.getHours()
+  let m = date.getMinutes()
+  const period = h >= 12 ? "下午" : "上午"
+  h = h % 12
+  if(h === 0) h = 12
+  return period + " " + h + "點" + String(m).padStart(2,"0") + "分"
 }
 
 function loadSystemStats(){
@@ -751,16 +787,6 @@ const li_socCurve={
 const li_socPercent=[0,20,40,60,80,100]
 let li_chart=null
 let li_chartAnimationTimer=null
-
-function li_formatTaiwanTime(date){
-  let h=date.getHours()
-  let m=date.getMinutes()
-  let s=date.getSeconds()
-  let period=h>=12?"下午":"上午"
-  let hour=h%12
-  if(hour===0) hour=12
-  return period+" "+hour+"點"+String(m).padStart(2,"0")+"分"+String(s).padStart(2,"0")+"秒"
-}
 
 function li_clearFieldErrors(){
   document.getElementById("li_vtype").classList.remove("input-error")
@@ -921,9 +947,14 @@ function li_calc(){
 
   const soc=li_getSOC(voltage,type)
   const remain=cap*(100-soc)/100
-  const time=(remain/charger)*1.35*(1 + (1-health)*0.4)
-  const finish=new Date(Date.now()+time*3600000)
-  const finishText=li_formatTaiwanTime(finish)
+  const baseTime=(remain/charger)*1.08*(1 + (1-health)*0.12)
+  const minTime=baseTime*0.93
+  const maxTime=baseTime*1.08
+
+  const finishMin=new Date(Date.now()+minTime*3600000)
+  const finishMax=new Date(Date.now()+maxTime*3600000)
+  const finishTextMin=formatTimeRange(finishMin)
+  const finishTextMax=formatTimeRange(finishMax)
 
   let warn=""
   if(voltage<=li_lithiumData[type].low){
@@ -936,10 +967,16 @@ function li_calc(){
     "健康判定 <span class='info-strong'>"+getHealthBadge(parseFloat(healthPercent))+"</span><br>"+
     "電池年齡 <span class='info-strong'>"+ageText+"</span><br>"+
     "目前充電模式 <span class='info-strong'>"+li_getChargeModeBySoc(soc)+"</span><br>"+
-    "預估充電時間 <span class='info-strong'>"+time.toFixed(1)+" 小時</span><br>"+
-    "預計 <span class='info-strong'>"+finishText+" 完成充電</span><br>"+
+    "預估充電時間 <span class='info-strong'>約 "+minTime.toFixed(1)+" ～ "+maxTime.toFixed(1)+" 小時</span><br>"+
+    "預計完成時間 <span class='info-strong'>約 "+finishTextMin+" ～ "+finishTextMax+"</span><br>"+
     warn+
-    "<br>提醒：騎乘後請靜置30分鐘再充電"
+    "<br>提醒：騎乘後請靜置30分鐘再充電"+
+    "<div class='small-note'>※ 充電時間為預估區間，鋰電理論值主要以 電池容量 Ah ÷ 充電器電流 A 為基礎，實際仍會依剩餘電量、電池狀況與末段充電時間略有差異。</div>"+
+    "<div class='notice-card'>"+
+    "<div class='notice-title'>到店檢測提醒</div>"+
+    "<div class='notice-text'>若檢測結果顯示電池老化或續航下降，歡迎到店免費檢測。</div>"+
+    "<div class='notice-store'>台南永康｜祥真一職人二輪電動車</div>"+
+    "</div>"
 
   document.getElementById("li_batteryBar").style.width=soc+"%"
 
@@ -1105,7 +1142,7 @@ function li_buildSegment(cap,current,health,startSoc){
     const to=points[i+1]
     const diff=to-from
     const ah=cap*(diff/100)
-    const t=(ah/current)*1.35*(1 + (1-health)*0.4)
+    const t=(ah/current)*1.08*(1 + (1-health)*0.12)
 
     html+="<tr><td>"+from.toFixed(1)+"% → "+to.toFixed(0)+"%</td><td>"+t.toFixed(2)+" 小時</td></tr>"
   }
@@ -1279,8 +1316,14 @@ function pb_calc(){
   if(type==="72") current=3
 
   const remain=cap*(100-soc)/100
-  const time=(remain/current)*1.35*(1 + (1-health)*0.35)
-  const finish=new Date(Date.now()+time*3600000)
+  const baseTime=(remain/current)*1.18*(1 + (1-health)*0.18)
+  const minTime=baseTime*0.95
+  const maxTime=baseTime*1.12
+
+  const finishMin=new Date(Date.now()+minTime*3600000)
+  const finishMax=new Date(Date.now()+maxTime*3600000)
+  const finishTextMin=formatTimeRange(finishMin)
+  const finishTextMax=formatTimeRange(finishMax)
 
   let warn=""
   if(v<=pb_voltageLimit[type].low){
@@ -1297,11 +1340,17 @@ function pb_calc(){
     "電池年齡 <span class='info-strong'>"+ageText+"</span><br>"+
     "建議狀態 <span class='info-strong'>"+adviceText+"</span><br>"+
     "目前充電模式 <span class='info-strong'>"+pb_getLeadChargeModeBySoc(soc)+"</span><br>"+
-    "預估充電時間 <span class='info-strong'>"+time.toFixed(1)+" 小時</span><br>"+
-    "預計充滿 <span class='info-strong'>"+finish.toLocaleTimeString()+"</span><br>"+
+    "預估充電時間 <span class='info-strong'>約 "+minTime.toFixed(1)+" ～ "+maxTime.toFixed(1)+" 小時</span><br>"+
+    "預計完成時間 <span class='info-strong'>約 "+finishTextMin+" ～ "+finishTextMax+"</span><br>"+
     warn+
     "<br>※ 健康度為推估值，實際仍需依電池負載測試判斷"+
-    "<br>提醒：騎乘後請靜置30分鐘再充電"
+    "<br>提醒：騎乘後請靜置30分鐘再充電"+
+    "<div class='small-note'>※ 充電時間為預估區間，鉛酸理論值同樣以 電池容量 Ah ÷ 充電器電流 A 為基礎，但因後段吸收充電較明顯，實際通常會比理論值再長一些。</div>"+
+    "<div class='notice-card'>"+
+    "<div class='notice-title'>到店檢測提醒</div>"+
+    "<div class='notice-text'>若檢測結果顯示電池老化或續航下降，歡迎到店免費檢測。</div>"+
+    "<div class='notice-store'>台南永康｜祥真一職人二輪電動車</div>"+
+    "</div>"
 
   document.getElementById("pb_batteryBar").style.width=soc+"%"
 
@@ -1456,46 +1505,19 @@ function pb_drawChart(voltList,startSoc,health){
 
 function pb_buildSegment(cap,current,health,startSoc){
   let html="<table><tr><td>區段</td><td>充電時間</td></tr>"
-  const agingFactor=(1 + (1-health)*0.35)
+  const agingFactor=(1 + (1-health)*0.18)
 
   for(let i=0;i<pb_socPercent.length-1;i++){
     if(pb_socPercent[i]>=startSoc){
       const diff=pb_socPercent[i+1]-pb_socPercent[i]
       const ah=cap*(diff/100)
-      const t=(ah/current)*1.35*agingFactor
+      const t=(ah/current)*1.18*agingFactor
       html+="<tr><td>"+pb_socPercent[i]+"% → "+pb_socPercent[i+1]+"%</td><td>"+t.toFixed(2)+" 小時</td></tr>"
     }
   }
 
   html+="</table>"
   document.getElementById("pb_segment").innerHTML=html
-}
-
-function rg_updateCapacity(){
-  const batteryType=document.getElementById("rg_batteryType").value
-  const voltage=document.getElementById("rg_voltage").value
-  const capacitySelect=document.getElementById("rg_capacity")
-  capacitySelect.innerHTML=""
-
-  let options=[]
-  if(batteryType==="lead"){
-    if(voltage==="48"){ options=[13,15,20,30] }
-    if(voltage==="60"){ options=[20,24,30] }
-    if(voltage==="72"){ options=[20,24,30] }
-    rg_updateAgeOptions(['全新','一年以上'])
-  }else{
-    if(voltage==="48"){ options=[12,16,20,30,40] }
-    if(voltage==="60"){ options=[20,30,40,50] }
-    if(voltage==="72"){ options=[30,40,50] }
-    rg_updateAgeOptions(['全新','使用約1年','使用2年以上'])
-  }
-
-  options.forEach(function(ah){
-    const opt=document.createElement("option")
-    opt.value=ah
-    opt.text=ah+"Ah"
-    capacitySelect.appendChild(opt)
-  })
 }
 
 function rg_updateAgeOptions(list){
@@ -1509,6 +1531,78 @@ function rg_updateAgeOptions(list){
     opt.text=item
     ageSelect.appendChild(opt)
   })
+}
+
+function rg_updateCapacity(){
+  const batteryType=document.getElementById("rg_batteryType").value
+  const voltageSelect=document.getElementById("rg_voltage")
+  const currentVoltage=voltageSelect.value
+  const capacitySelect=document.getElementById("rg_capacity")
+
+  voltageSelect.innerHTML=""
+  capacitySelect.innerHTML=""
+
+  if(batteryType==="lead"){
+    ;["48","60","72"].forEach(function(v){
+      const opt=document.createElement("option")
+      opt.value=v
+      opt.text=v+"V"
+      voltageSelect.appendChild(opt)
+    })
+
+    if(["48","60","72"].includes(currentVoltage)){
+      voltageSelect.value=currentVoltage
+    }else{
+      voltageSelect.value="48"
+    }
+
+    const voltage=voltageSelect.value
+    let options=[]
+
+    if(voltage==="48"){ options=[13,15,20,24,30] }
+    if(voltage==="60"){ options=[20,24,30] }
+    if(voltage==="72"){ options=[20,24,30] }
+
+    rg_updateAgeOptions(['全新','一年以上'])
+
+    options.forEach(function(ah){
+      const opt=document.createElement("option")
+      opt.value=ah
+      opt.text=ah+"Ah"
+      capacitySelect.appendChild(opt)
+    })
+
+  }else{
+    ;["48","60","72","76"].forEach(function(v){
+      const opt=document.createElement("option")
+      opt.value=v
+      opt.text=v+"V"
+      voltageSelect.appendChild(opt)
+    })
+
+    if(["48","60","72","76"].includes(currentVoltage)){
+      voltageSelect.value=currentVoltage
+    }else{
+      voltageSelect.value="48"
+    }
+
+    const voltage=voltageSelect.value
+    let options=[]
+
+    if(voltage==="48"){ options=[12,16,20,30,40,50] }
+    if(voltage==="60"){ options=[20,30,40,50] }
+    if(voltage==="72"){ options=[30,40,50] }
+    if(voltage==="76"){ options=[30,40,50] }
+
+    rg_updateAgeOptions(['全新','使用約1年','使用2年以上'])
+
+    options.forEach(function(ah){
+      const opt=document.createElement("option")
+      opt.value=ah
+      opt.text=ah+"Ah"
+      capacitySelect.appendChild(opt)
+    })
+  }
 }
 
 function rg_calculate(){
@@ -1532,9 +1626,10 @@ function rg_calculate(){
   if(voltage===48) consumption=22
   if(voltage===60) consumption=25
   if(voltage===72) consumption=30
+  if(voltage===76) consumption=30
 
   let range=effectiveWh/consumption
-  if(voltage===72 && range>100){ range=100 }
+  if((voltage===72 || voltage===76) && range>100){ range=100 }
   range=range.toFixed(1)
 
   let halfYearDecay=batteryType==="lead" ? 12 : 8
@@ -1549,7 +1644,12 @@ function rg_calculate(){
     "半年：約 "+halfYearDecay+"%<br>"+
     "一年：約 "+oneYearDecay+"%<br><br>"+
     "🔄 預估循環壽命：<span class='info-strong'>"+cycleInfo+"</span><br>"+
-    "<div class='small-note'>🔋⚠️ 電池壽命會因騎乘習慣、充電方式、環境溫度、濕度、灰塵與載重影響，每位車主實際狀況可能有所不同。</div>"
+    "<div class='small-note'>🔋⚠️ 電池壽命會因騎乘習慣、充電方式、環境溫度、濕度、灰塵與載重影響，每位車主實際狀況可能有所不同。</div>"+
+    "<div class='notice-card'>"+
+    "<div class='notice-title'>到店檢測提醒</div>"+
+    "<div class='notice-text'>若評估結果顯示續航下降或電池衰退，歡迎到店免費檢測。</div>"+
+    "<div class='notice-store'>台南永康｜祥真一職人二輪電動車</div>"+
+    "</div>"
 }
 
 li_updateCapacityOptions()
