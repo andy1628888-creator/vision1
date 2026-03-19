@@ -173,8 +173,7 @@ header::after{
   font-weight:800;
   cursor:pointer;
   color:#18519d;
-  background:
-    linear-gradient(180deg,#f8fbff,#ebf3ff);
+  background:linear-gradient(180deg,#f8fbff,#ebf3ff);
   box-shadow:
     inset 0 0 0 1px #d8e5f7,
     0 6px 14px rgba(50,96,170,0.08);
@@ -191,8 +190,7 @@ header::after{
 
 .tab-btn.active{
   color:#fff;
-  background:
-    linear-gradient(135deg,#0e5fc6,#3084ea);
+  background:linear-gradient(135deg,#0e5fc6,#3084ea);
   box-shadow:
     0 10px 20px rgba(31,96,188,0.22),
     inset 0 1px 0 rgba(255,255,255,0.14);
@@ -285,8 +283,7 @@ button.calc-btn:hover{
 
 .result{
   margin-top:18px;
-  background:
-    linear-gradient(180deg,#f9fbff,#f3f8ff);
+  background:linear-gradient(180deg,#f9fbff,#f3f8ff);
   padding:18px;
   border-radius:16px;
   line-height:1.95;
@@ -415,8 +412,7 @@ canvas{
 
 .stats-box{
   margin-top:18px;
-  background:
-    linear-gradient(180deg,#f8fbff,#eef5ff);
+  background:linear-gradient(180deg,#f8fbff,#eef5ff);
   padding:15px;
   border-radius:16px;
   box-shadow:
@@ -554,6 +550,13 @@ footer{
   <label>靜置電壓</label>
   <input id="li_voltage" type="number" step="0.1" placeholder="例如 49">
 
+  <div class="small-note">
+    建議充電前先打開電門查看儀表板電壓作為參考<br>
+    ⚠ 專業建議：騎乘後務必靜置30分鐘以上再充電，避免高溫直接充電造成電池壽命縮短<br>
+    （此步驟非常重要，請務必遵守）<br>
+    靜置後再量測電壓，數據判讀會更準確
+  </div>
+
   <button class="calc-btn" onclick="li_calc()">開始計算</button>
 
   <div id="li_errorBox" class="error-box"></div>
@@ -597,6 +600,13 @@ footer{
   <label>靜置電壓</label>
   <input id="pb_voltage" type="number" step="0.1" placeholder="例如 45">
 
+  <div class="small-note">
+    建議充電前先打開電門查看儀表板電壓作為參考<br>
+    ⚠ 專業建議：騎乘後務必靜置30分鐘以上再充電，避免高溫直接充電造成電池壽命縮短<br>
+    （此步驟非常重要，請務必遵守）<br>
+    靜置後再量測電壓，數據判讀會更準確
+  </div>
+
   <button class="calc-btn" onclick="pb_calc()">開始計算</button>
 
   <div id="pb_errorBox" class="error-box"></div>
@@ -636,7 +646,7 @@ footer{
   <label>容量</label>
   <select id="rg_capacity"></select>
 
-  <label>使用狀況</label>
+  <label>電池使用年齡</label>
   <select id="rg_age"></select>
 
   <label>騎乘環境</label>
@@ -1519,15 +1529,23 @@ function pb_buildSegment(cap,current,health,startSoc){
   document.getElementById("pb_segment").innerHTML=html
 }
 
-function rg_updateAgeOptions(list){
+function rg_updateAgeOptions(){
   const ageSelect=document.getElementById("rg_age")
   ageSelect.innerHTML=""
-  list.forEach(function(item){
+
+  const options = [
+    {text:'全新', value:1.00},
+    {text:'使用3個月', value:0.95},
+    {text:'使用6個月', value:0.90},
+    {text:'使用約1年', value:0.85},
+    {text:'使用1年6個月', value:0.78},
+    {text:'使用2年以上', value:0.70}
+  ]
+
+  options.forEach(function(item){
     const opt=document.createElement("option")
-    if(item==='全新') opt.value=1
-    else if(item==='一年以上' || item==='使用約1年') opt.value=0.88
-    else if(item==='使用2年以上') opt.value=0.75
-    opt.text=item
+    opt.value=item.value
+    opt.text=item.text
     ageSelect.appendChild(opt)
   })
 }
@@ -1562,7 +1580,7 @@ function rg_updateCapacity(){
     if(voltage==="60"){ options=[20,24,30] }
     if(voltage==="72"){ options=[20,24,30] }
 
-    rg_updateAgeOptions(['全新','一年以上'])
+    rg_updateAgeOptions()
 
     options.forEach(function(ah){
       const opt=document.createElement("option")
@@ -1593,7 +1611,7 @@ function rg_updateCapacity(){
     if(voltage==="72"){ options=[30,40,50] }
     if(voltage==="76"){ options=[30,40,50] }
 
-    rg_updateAgeOptions(['全新','使用約1年','使用2年以上'])
+    rg_updateAgeOptions()
 
     options.forEach(function(ah){
       const opt=document.createElement("option")
