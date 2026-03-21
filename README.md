@@ -718,6 +718,20 @@ function formatTimeRange(date){
   return period + " " + h + "點" + String(m).padStart(2,"0") + "分"
 }
 
+function getDetectTimeText(){
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = String(now.getMonth()+1).padStart(2,"0")
+  const day = String(now.getDate()).padStart(2,"0")
+  let hour = now.getHours()
+  const minute = String(now.getMinutes()).padStart(2,"0")
+  const period = hour >= 12 ? "下午" : "上午"
+  hour = hour % 12
+  if(hour === 0) hour = 12
+
+  return year + "/" + month + "/" + day + " " + period + " " + hour + ":" + minute
+}
+
 function loadSystemStats(){
   fetch("https://api.counterapi.dev/v1/xiangzhen/views/up")
   .then(res=>res.json())
@@ -964,6 +978,7 @@ function li_calc(){
   const finishMax=new Date(Date.now()+maxTime*3600000)
   const finishTextMin=formatTimeRange(finishMin)
   const finishTextMax=formatTimeRange(finishMax)
+  const detectTimeText = getDetectTimeText()
 
   let warn=""
   if(voltage<=li_lithiumData[type].low){
@@ -971,6 +986,7 @@ function li_calc(){
   }
 
   document.getElementById("li_result").innerHTML=
+    "<div class='small-note' style='margin-top:0;margin-bottom:10px;'>檢測時間："+detectTimeText+"</div>"+
     "剩餘電量 <span class='info-strong'>"+soc.toFixed(1)+"%</span><br>"+
     "電池健康度 <span class='info-strong'>"+healthPercent+"%</span><br>"+
     "健康判定 <span class='info-strong'>"+getHealthBadge(parseFloat(healthPercent))+"</span><br>"+
@@ -1333,6 +1349,7 @@ function pb_calc(){
   const finishMax=new Date(Date.now()+maxTime*3600000)
   const finishTextMin=formatTimeRange(finishMin)
   const finishTextMax=formatTimeRange(finishMax)
+  const detectTimeText = getDetectTimeText()
 
   let warn=""
   if(v<=pb_voltageLimit[type].low){
@@ -1343,6 +1360,7 @@ function pb_calc(){
   const adviceText=pb_getBatteryAdvice(months, health)
 
   document.getElementById("pb_result").innerHTML=
+    "<div class='small-note' style='margin-top:0;margin-bottom:10px;'>檢測時間："+detectTimeText+"</div>"+
     "剩餘電量 <span class='info-strong'>"+soc.toFixed(1)+"%</span><br>"+
     "電池健康度 <span class='info-strong'>"+healthPercent+"%</span><br>"+
     "健康判定 <span class='info-strong'>"+getHealthBadge(parseFloat(healthPercent))+"</span><br>"+
@@ -1634,6 +1652,7 @@ function rg_calculate(){
   const ageFactor=parseFloat(document.getElementById("rg_age").value)
   const roadFactor=parseFloat(document.getElementById("rg_road").value)
   const weightFactor=parseFloat(document.getElementById("rg_weight").value)
+  const detectTimeText = getDetectTimeText()
 
   const rawWh=voltage*ah
   let efficiency=batteryType==="lead" ? 0.78 : 0.90
@@ -1654,6 +1673,7 @@ function rg_calculate(){
   let cycleInfo=batteryType==="lead" ? "約 250～400 次循環" : "約 600～900 次循環"
 
   document.getElementById("rg_output").innerHTML=
+    "<div class='small-note' style='margin-top:0;margin-bottom:10px;'>檢測時間："+detectTimeText+"</div>"+
     "🔋 電池總電量：<span class='info-strong'>"+rawWh+" Wh</span><br>"+
     "⚙ 有效可用電量：約 <span class='info-strong'>"+effectiveWh.toFixed(0)+" Wh</span><br><br>"+
     "🛣 預估安全續航距離：約 <span class='info-strong'>"+range+" km</span><br><br>"+
