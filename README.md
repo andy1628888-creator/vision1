@@ -1686,6 +1686,13 @@ function rg_calculate(){
     "<div class='notice-title'>到店檢測提醒</div>"+
     "<div class='notice-text'>若評估結果顯示續航下降或電池衰退，歡迎到店免費檢測。</div>"+
     "<div class='notice-store'>台南永康｜祥真一職人二輪電動車</div>"+
+    "</div>"+
+    "<div class='notice-card' style='margin-top:16px;border-left:5px solid #5b8def;'>"+
+    "<div class='notice-title'>📘 測試提醒</div>"+
+    "<div class='notice-text'>"+
+    "本系統以一般道路騎乘情況作為估算參考，建議以平均速度、正常催油方式看待結果。<br><br>"+
+    "若車輛全負載、長時間全油門、頻繁急加速、重載、爬坡或胎壓不足，實際續航表現可能會明顯下降，與估算結果產生落差屬正常情況。"+
+    "</div>"+
     "</div>"
 }
 
